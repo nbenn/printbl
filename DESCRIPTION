@@ -10,3 +10,9 @@ Description: What the package does (one paragraph).
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    cli,
+    pillar,
+    crayon,
+    fansi,
+    memuse
