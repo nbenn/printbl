@@ -13,7 +13,7 @@ print_table <- function(x, n = 5L, width = getOption("width", 80L),
   }
 
   add_rowid <- function(x, id) {
-    width <- max(crayon::col_nchar(id))
+    width <- pillar::get_max_extent(id)
     id_col <- list(capital_format = rep(strrep(" ", width), 2L),
                    shaft_format = format(id))
     c(list(id_col), x)
@@ -61,17 +61,22 @@ print_table <- function(x, n = 5L, width = getOption("width", 80L),
     }
   }
 
-  rowid <- big_mark(rowid)
+  if (is.numeric(rowid)) {
+    rowid <- big_mark(rowid)
+  } else {
+    rowid <- str_trunc(rowid, getOption("pillar.min_title_chars", 15L))
+  }
 
   rowid <- pillar::style_subtle(format(rowid))
 
   tbl <- pillar::squeeze(
     pillar::colonnade(dat, has_row_id = FALSE,
-                      width = width - max(crayon::col_nchar(rowid)) - 1L)
+                      width = width - pillar::get_max_extent(rowid) - 1L)
   )
 
   extra <- pillar::extra_cols(tbl, n = n_extra)
   tbl <- lapply(tbl, complete_colonnade, rowid, n, add_sep)
+  class(tbl) <- "squeezed_colonnade"
   desc <- pillar::style_subtle(paste0("# ", obj_desc(x)))
 
   if (length(extra) > 0L) {

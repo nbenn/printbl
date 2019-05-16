@@ -15,6 +15,21 @@ times <- function(fancy = l10n_info()$`UTF-8`) {
   }
 }
 
+str_trunc <- function(x, width) {
+
+  if (is.infinite(width)) return(x)
+
+  str_width <- pillar::get_extent(x)
+
+  too_wide <- which(!is.na(x) & str_width > width)
+  x[too_wide] <- paste0(
+    fansi::substr_ctl(x[too_wide], 1, width - pillar::get_extent(ellipsis())),
+    ellipsis()
+  )
+
+  x
+}
+
 big_mark <- function(x, ...) {
   mark <- if (identical(getOption("OutDec"), ",")) "." else ","
   formatC(x, big.mark = mark, ...)
