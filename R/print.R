@@ -1,4 +1,5 @@
 
+#' @export
 print_table <- function(x, n = 5L, width = getOption("width", 80L),
                         n_extra = 100L) {
 
@@ -61,6 +62,7 @@ print_table <- function(x, n = 5L, width = getOption("width", 80L),
   }
 
   rowid <- big_mark(rowid)
+
   rowid <- pillar::style_subtle(format(rowid))
 
   tbl <- pillar::squeeze(

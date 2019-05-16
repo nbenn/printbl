@@ -16,3 +16,5 @@ Imports:
     crayon,
     fansi,
     memuse
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
