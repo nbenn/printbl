@@ -35,19 +35,23 @@ big_mark <- function(x, ...) {
   formatC(x, big.mark = mark, ...)
 }
 
+#' @export
 print_dim <- function(x) {
   paste0("[", big_mark(as.integer(nrow(x))), " ", times(), " ",
         big_mark(as.integer(ncol(x))), "]")
 }
 
+#' @export
 obj_desc <- function (x, ...) {
   UseMethod("obj_desc", x)
 }
 
+#' @export
 obj_desc.data.frame <- function(x, ...) {
   paste0("A data.frame ", print_dim(x), " ", memuse::mu(x))
 }
 
+#' @export
 obj_desc.default <- function(x, ...) {
   print_dim(x)
 }
